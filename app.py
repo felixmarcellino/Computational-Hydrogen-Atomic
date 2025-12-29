@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 # ----------------------------
 # Load Precomputed Dataset
 # ----------------------------
-df = pd.read_csv("Orbital Features.xlsx")
+df = pd.read_csv("Orbital_Features.csv")
 
 # Map (n,l,m) to cluster name
 cluster_names = {0: "Compact", 1: "Intermediate", 2: "Diffuse"}
