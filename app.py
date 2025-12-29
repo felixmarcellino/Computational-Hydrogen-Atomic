@@ -31,13 +31,13 @@ m = st.sidebar.selectbox("Magnetic quantum number (m)", options=m_options, index
 
 # Get data
 row = df[(df["n"] == n) & (df["l"] == l) & (df["m"] == m)].iloc[0]
-cluster_name = cluster_names.get(row["cluster"], "Unknown")
 
 st.subheader(f"Orbital: ψ_{{{int(n)},{int(l)},{int(m)}}}")
 col1, col2, col3 = st.columns(3)
-col1.metric("⟨r⟩ (a₀)", f"{row['<r>_analitik']:.2f}")
+col1.metric("⟨r⟩ (a₀)", f"{row['r_exp_analytical']:.2f}")
 col2.metric("σᵣ (a₀)", f"{row['sigma_r']:.2f}")
-col3.metric("Cluster", cluster_name)
+col3.metric("Cluster", cluster_names.get(row["cluster"], "Unknown"))
+cluster_name = cluster_names.get(row["cluster"], "Unknown")
 
 # Simple 3D visualization (approximate shape only)
 st.subheader("3D Orbital Shape (Approximation)")
@@ -45,9 +45,6 @@ phi = np.linspace(0, 2 * np.pi, 30)
 theta = np.linspace(0, np.pi, 30)
 phi, theta = np.meshgrid(phi, theta)
 
-# Use analytical angular dependence only: |Y_l^m|^2 approximated
-# For simplicity, we use |Y_l^m|^2 ~ (sinθ)^|m| * P_l^m(cosθ)^2
-# But without scipy, we use heuristic shapes:
 if l == 0:
     angular = np.ones_like(theta)
 elif l == 1:
